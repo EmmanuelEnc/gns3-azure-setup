@@ -33,7 +33,7 @@ The GNS3 server is hosted on an Ubuntu VM in Azure and configured to allow remot
   - OS: **Ubuntu 22.04 LTS (Server)**
   - VM Size: **Standard E2s_v3** (2 vCPU, 16GB RAM – supports nested virtualization and Docker)
   - Assigned to subnet: **GNS3-Net**
-  - Assigned a **static private IP**: `10.0.100.10`
+  - Assigned a **static private IP**: `10.0.100.4`
   - Attached a **public IP** to enable remote access  
 
 ![gns3vm](https://i.imgur.com/ZQNJgF3.png)
