@@ -1,0 +1,126 @@
+<h1>🛠️ GNS3 Azure Setup – Stage 1</h1>
+
+<h2>📌 Project Overview</h2>
+<p>This project is part of a multi-stage portfolio titled <strong>Cloud_netOps360</strong>, which simulates enterprise network operations and security monitoring using both cloud and local virtualization tools. Stage 1 focuses on deploying a cloud-based GNS3 server in Microsoft Azure that will host and simulate the entire infrastructure of later stages. This includes multiple subnets, routers, switches, security tools, and client/server services.</p>
+<p>The GNS3 server is hosted on an Ubuntu VM in Azure and configured to allow remote management using the GNS3 GUI from a local Windows system. This setup lays the groundwork for routing simulation, IDS testing, and realistic network segmentation in later stages.</p>
+
+<h2>🛠️ Technologies Used</h2>
+<ul>
+  <li><strong>Microsoft Azure</strong> – Cloud platform for network simulation, VM provisioning, and subnetting</li>
+  <li><strong>Ubuntu Server 22.04 LTS</strong> – Operating system for the GNS3 VM</li>
+  <li><strong>GNS3 Server</strong> – Network simulation software used to build and manage virtual networks</li>
+  <li><strong>Docker</strong> – Provides lightweight, containerized devices for testing connectivity and functionality</li>
+  <li><strong>uBridge</strong> – Required GNS3 backend tool for bridging Docker, VPCS, and virtual network links</li>
+  <li><strong>VNet & Subnetting</strong> – Configured Azure networking with GNS3-Net for VM communication</li>
+  <li><strong>NSG (Network Security Groups)</strong> – Used to control traffic to the GNS3 VM</li>
+  <li><strong>SSH (port 22)</strong> – Used for remote terminal access from local Windows machine</li>
+  <li><strong>GNS3 GUI (local)</strong> – Installed on Windows PC to remotely control the Azure GNS3 server</li>
+</ul>
+
+<h2>⚙️ To Replicate This Project:</h2>
+
+<h3>📍 Step 1: Plan Network Layout</h3>
+<ul>
+  <li>Created a new <strong>Virtual Network (VNet)</strong> named <code>CloudNetops360-VNet</code> with address space <code>10.0.0.0/16</code></li>
+</ul>
+<img src="https://i.imgur.com/bSfbWSZ.png" alt="vnet" style="max-width: 100%; border-radius: 8px;">
+<ul>
+  <li>Created a subnet named <code>GNS3-Net</code> within the VNet using address range <code>10.0.100.0/24</code></li>
+</ul>
+<img src="https://i.imgur.com/rquGsUn.png" alt="subnet" style="max-width: 100%; border-radius: 8px;">
+<p>This subnet is dedicated to the GNS3 VM.</p>
+
+<h3>📍 Step 2: Deploy the GNS3 VM on Azure</h3>
+<ul>
+  <li>Launched a new virtual machine:</li>
+  <ul>
+    <li>OS: <strong>Ubuntu 22.04 LTS (Server)</strong></li>
+    <li>VM Size: <strong>Standard E2s_v3</strong> (2 vCPU, 16GB RAM)</li>
+    <li>Assigned to subnet: <strong>GNS3-Net</strong></li>
+    <li>Static private IP: <code>10.0.100.4</code></li>
+    <li>Attached a public IP for remote access</li>
+  </ul>
+</ul>
+<img src="https://i.imgur.com/ZQNJgF3.png" alt="gns3vm" style="max-width: 100%; border-radius: 8px;">
+
+<h3>📍 Step 3: Configure Network Security Group (NSG)</h3>
+<p>Created an NSG with the following inbound rules:</p>
+<table>
+  <tr><th>Priority</th><th>Name</th><th>Port(s)</th><th>Protocol</th><th>Source</th><th>Destination</th><th>Action</th><th>Purpose</th></tr>
+  <tr><td>100</td><td>Allow-SSH</td><td>22</td><td>TCP</td><td>My Public IP</td><td>Any</td><td>Allow</td><td>SSH access to VM</td></tr>
+  <tr><td>110</td><td>Allow-GNS3-API</td><td>3080</td><td>TCP</td><td>My Public IP</td><td>Any</td><td>Allow</td><td>Remote GNS3 GUI to connect</td></tr>
+  <tr><td>120</td><td>Allow-GNS3-Ports</td><td>2000–5000</td><td>TCP/UDP</td><td>My Public IP</td><td>Any</td><td>Allow</td><td>Device communication</td></tr>
+  <tr><td>130</td><td>Allow-ICMP</td><td>*</td><td>ICMP</td><td>My Public IP</td><td>Any</td><td>Allow</td><td>Ping testing</td></tr>
+  <tr><td>1000</td><td>Deny-All</td><td>*</td><td>*</td><td>Any</td><td>Any</td><td>Deny</td><td>Block all other traffic</td></tr>
+</table>
+
+<h3>📍 Step 4: SSH into VM & Install GNS3 + Dependencies</h3>
+<pre><code>ssh gns3-admin@&lt;AzurePublicIP&gt;
+
+sudo apt update
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:gns3/ppa
+sudo apt update
+sudo apt install -y gns3-server docker.io ubridge
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+sudo usermod -aG ubridge $USER
+newgrp docker
+newgrp ubridge</code></pre>
+
+<h3>📍 Step 5: Configure GNS3 Server for Remote Access</h3>
+<pre><code>mkdir -p ~/.config/GNS3
+nano ~/.config/GNS3/gns3_server.conf</code></pre>
+<p>Added the following:</p>
+<pre><code>[Server]
+host = 0.0.0.0
+port = 3080
+local = True</code></pre>
+<pre><code>gns3server &amp;</code></pre>
+
+<h3>📍 Step 6: Pull Docker Images (for testing)</h3>
+<pre><code>docker pull alpine
+docker pull ubuntu
+docker pull busybox</code></pre>
+
+<h3>📍 Step 7: Setup GNS3 GUI on Local Windows PC</h3>
+<ul>
+  <li>Downloaded from <a href="https://gns3.com/software/download" target="_blank">GNS3 website</a></li>
+  <li>Installed only the <strong>GNS3 GUI</strong></li>
+  <li>Added remote server in Preferences with Azure VM Public IP and port 3080</li>
+</ul>
+<img src="https://i.imgur.com/eVZNgDE.png" alt="gns3-guisettings" style="max-width: 100%; border-radius: 8px;">
+<img src="https://i.imgur.com/r8uWhwd.png" alt="servercli" style="max-width: 100%; border-radius: 8px;">
+
+<h3>📍 Step 8: Validate Remote Connection</h3>
+<ul>
+  <li>Opened GNS3 GUI</li>
+  <li>Created new project</li>
+  <li>Added Docker containers and VPCS nodes</li>
+  <li>Started devices and confirmed functionality</li>
+</ul>
+<img src="https://i.imgur.com/4zK93MQ.png" alt="devicesconnected" style="max-width: 100%; border-radius: 8px;">
+
+<h2>🚀 Future Improvements</h2>
+<ul>
+  <li><strong>Stage 2:</strong> Simulate internal network topology</li>
+  <li>Automate GNS3 server startup via systemd</li>
+  <li>Add advanced router/firewall images</li>
+  <li>Enable encrypted GNS3 API communication</li>
+  <li>Integrate Azure monitoring or Sentinel</li>
+  <li>Use Ansible or Terraform for IaC</li>
+</ul>
+
+<h2>✅ Conclusion</h2>
+<p>Stage 1 successfully established the core of the Cloud_netOps360 lab environment by deploying and configuring a <strong>remote GNS3 server in Microsoft Azure</strong>. Key accomplishments include:</p>
+<ul>
+  <li>Creation of a VNet and subnet for the GNS3 environment</li>
+  <li>Deployment and configuration of an Ubuntu VM with GNS3, Docker, and uBridge</li>
+  <li>Remote access setup via GNS3 GUI from a local PC</li>
+  <li>Validation using Docker containers and VPCS</li>
+</ul>
+<p>This stage provides a secure and scalable platform to simulate advanced networking concepts, traffic flow, and cybersecurity scenarios in upcoming stages.</p>
+
+<hr>
+<p style="text-align: center; font-size: 14px; color: gray;">© 2025 Emmanuel Encarnacion • GitHub Portfolio</p>
