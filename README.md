@@ -1,4 +1,4 @@
-# 🛠️ GNS3 Azure Setup – Stage 1
+# ![image](https://github.com/user-attachments/assets/dfaedef5-a483-432f-874f-0b2ff48b3497) GNS3 Azure Setup – Stage 1
 
 ## 📌 Project Overview
 This project is part of a multi-stage portfolio titled Cloud_netOps360, which simulates enterprise network operations and security monitoring using both cloud and local virtualization tools.
