@@ -1,8 +1,9 @@
-<h1>🛠️ GNS3 Azure Setup – Stage 1</h1>
+<h1>🛠️ GNS3 Azure Setup</h1>
 
 <h2>📌 Project Overview</h2>
-<p>This project is part of a multi-stage portfolio titled <strong>Cloud_netOps360</strong>, which simulates enterprise network operations and security monitoring using both cloud and local virtualization tools. Stage 1 focuses on deploying a cloud-based GNS3 server in Microsoft Azure that will host and simulate the entire infrastructure of later stages. This includes multiple subnets, routers, switches, security tools, and client/server services.</p>
-<p>The GNS3 server is hosted on an Ubuntu VM in Azure and configured to allow remote management using the GNS3 GUI from a local Windows system. This setup lays the groundwork for routing simulation, IDS testing, and realistic network segmentation in later stages.</p>
+<p>This project demonstrates how to deploy and configure a cloud-hosted GNS3 server on an Ubuntu virtual machine in Microsoft Azure. The GNS3 server enables remote network simulation, allowing users to design, test, and manage virtual network topologies using the GNS3 GUI installed on a local Windows system.</p>
+<p>By hosting GNS3 in the cloud, this setup enables persistent and scalable network emulation without the limitations of local machine resources. It's ideal for students, network engineers, and cybersecurity professionals who want a flexible lab environment accessible from anywhere</p>
+<p>This project showcases essential skills in cloud infrastructure provisioning, network simulation, remote system administration, and GNS3 platform configuration, and serves as a foundation for building more complex labs involving routing, security monitoring, and system integration.</p>
 
 <h2>🛠️ Technologies Used</h2>
 <ul>
@@ -113,14 +114,8 @@ docker pull busybox</code></pre>
 </ul>
 
 <h2>✅ Conclusion</h2>
-<p>Stage 1 successfully established the core of the Cloud_netOps360 lab environment by deploying and configuring a <strong>remote GNS3 server in Microsoft Azure</strong>. Key accomplishments include:</p>
-<ul>
-  <li>Creation of a VNet and subnet for the GNS3 environment</li>
-  <li>Deployment and configuration of an Ubuntu VM with GNS3, Docker, and uBridge</li>
-  <li>Remote access setup via GNS3 GUI from a local PC</li>
-  <li>Validation using Docker containers and VPCS</li>
-</ul>
-<p>This stage provides a secure and scalable platform to simulate advanced networking concepts, traffic flow, and cybersecurity scenarios in upcoming stages.</p>
+<p>This project successfully demonstrates how to set up a cloud-hosted GNS3 server in Azure for remote network simulation and testing. From provisioning the virtual machine and configuring secure access, to installing GNS3, Docker, and essential dependencies, every step was designed to establish a scalable and accessible virtual lab environment.</p>
+<p>By decoupling the simulation engine from local hardware limitations, this setup provides a reliable platform for experimenting with routing, switching, network segmentation, and protocol testing — all from a remote GNS3 GUI. Whether used for learning, certification prep, or prototyping, this architecture lays the groundwork for future expansion into more advanced networking or cybersecurity projects.</p>
 
 <hr>
 <p style="text-align: center; font-size: 14px; color: gray;">© 2025 Emmanuel Encarnacion • GitHub Portfolio</p>
