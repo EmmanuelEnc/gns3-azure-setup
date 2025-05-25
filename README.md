@@ -1,10 +1,11 @@
-# ![image](https://github.com/user-attachments/assets/dfaedef5-a483-432f-874f-0b2ff48b3497) GNS3 Azure Setup – Stage 1
+# ![image](https://github.com/user-attachments/assets/dfaedef5-a483-432f-874f-0b2ff48b3497) GNS3 Azure Setup 
 
 ## 📌 Project Overview
-This project is part of a multi-stage portfolio titled Cloud_netOps360, which simulates enterprise network operations and security monitoring using both cloud and local virtualization tools.
-Stage 1 focuses on deploying a cloud-based GNS3 server in Microsoft Azure that will host and simulate the entire infrastructure of later stages. This includes multiple subnets, routers, switches, security tools, and client/server services.
+This project demonstrates how to deploy and configure a cloud-hosted GNS3 server on an Ubuntu virtual machine in Microsoft Azure. The GNS3 server enables remote network simulation, allowing users to design, test, and manage virtual network topologies using the GNS3 GUI installed on a local Windows system.
 
-The GNS3 server is hosted on an Ubuntu VM in Azure and configured to allow remote management using the GNS3 GUI from a local Windows system. This setup lays the groundwork for routing simulation, IDS testing, and realistic network segmentation in later stages.
+By hosting GNS3 in the cloud, this setup enables persistent and scalable network emulation without the limitations of local machine resources. It's ideal for students, network engineers, and cybersecurity professionals who want a flexible lab environment accessible from anywhere.
+
+This project showcases essential skills in cloud infrastructure provisioning, network simulation, remote system administration, and GNS3 platform configuration, and serves as a foundation for building more complex labs involving routing, security monitoring, and system integration.
 
 ## 🛠️ Technologies Used
 - **Microsoft Azure** – Cloud platform for network simulation, VM provisioning, and subnetting
@@ -122,12 +123,6 @@ docker pull busybox
 
 As the foundation of the Cloud_netOps360 project, this GNS3 VM deployment in Azure sets the stage for future expansions and advanced simulations. The next steps include:
 
-### 🔸 Stage 2: Simulate Internal Network Topology
-In Stage 2, the GNS3 server will be used to build a simulated internal enterprise network. This will include:
-- Virtual routers and switches (using IOS images or Docker-based devices)
-- A basic LAN topology representing separate departments or zones
-- Simulated traffic paths to validate GNS3 functionality and routing behavior
-
 ### 🔧 Additional Improvements:
 - Automate GNS3 server startup via `systemd`  
 - Add advanced router/firewall images (Cisco IOSv, pfSense, VyOS)  
@@ -139,15 +134,8 @@ In Stage 2, the GNS3 server will be used to build a simulated internal enterpris
 
 ## ✅ Conclusion
 
-Stage 1 successfully established the core of the Cloud_netOps360 lab environment by deploying and configuring a **remote GNS3 server in Microsoft Azure**. Key accomplishments include:
+This project successfully demonstrates how to set up a cloud-hosted GNS3 server in Azure for remote network simulation and testing. From provisioning the virtual machine and configuring secure access, to installing GNS3, Docker, and essential dependencies, every step was designed to establish a scalable and accessible virtual lab environment.
 
-- Creation of a VNet and subnet for the GNS3 environment
-- Deployment and configuration of an Ubuntu VM running GNS3, Docker, and uBridge
-- Setup of remote access via GNS3 GUI from a local Windows PC
-- Verified Docker-based containers and connectivity
-- Documented every configuration step for reproducibility
-
-This stage provides a secure and scalable platform to simulate advanced networking concepts, traffic flow, and cybersecurity scenarios in upcoming stages.
-
+By decoupling the simulation engine from local hardware limitations, this setup provides a reliable platform for experimenting with routing, switching, network segmentation, and protocol testing — all from a remote GNS3 GUI. Whether used for learning, certification prep, or prototyping, this architecture lays the groundwork for future expansion into more advanced networking or cybersecurity projects.
 ---
 © 2025 Emmanuel Encarnacion • GitHub Portfolio
